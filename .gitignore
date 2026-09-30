@@ -1,0 +1,47 @@
+# =============================================
+# Flood Mapping Project - .gitignore
+# =============================================
+
+# --- Large Data Files (too big for GitHub) ---
+data/*.tif
+data/*.csv
+
+# --- Large Model Files ---
+outputs/models/*.pkl
+
+# --- Large Raster Outputs ---
+outputs/maps/*.tif
+
+# --- Keep PNG maps and HTML map (they're fine) ---
+# outputs/maps/*.png  -> will be tracked
+# outputs/maps/*.html -> will be tracked
+
+# --- Python Cache ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+.Python
+
+# --- Virtual Environments ---
+venv/
+env/
+.env
+.venv/
+
+# --- Jupyter Notebooks (if any) ---
+.ipynb_checkpoints/
+
+# --- OS Files ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- IDE Files ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Logs ---
+*.log
