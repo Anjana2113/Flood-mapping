@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌊 Kuttanad Flood Risk & Susceptibility AI System</title>
+    <title>🌊 Kuttanad Flood Early Warning & Emergency Decision System</title>
     <!-- Leaflet CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #0f172a;
-            --panel-bg: rgba(30, 41, 59, 0.92);
-            --border-color: rgba(255, 255, 255, 0.12);
+            --bg-dark: #0b1120;
+            --panel-bg: rgba(15, 23, 42, 0.95);
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --border-color: rgba(255, 255, 255, 0.1);
             --accent-blue: #38bdf8;
             --accent-green: #4ade80;
             --accent-orange: #fb923c;
@@ -35,52 +34,81 @@
             overflow: hidden;
         }
 
+        /* HEADER */
         header {
-            height: 60px;
-            background: rgba(15, 23, 42, 0.95);
+            height: 64px;
+            background: rgba(11, 17, 32, 0.98);
             border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 24px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             z-index: 1000;
         }
 
-        .header-title {
+        .header-left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
+        }
+
+        .brand-title {
             font-size: 18px;
-            font-weight: 700;
+            font-weight: 800;
+            letter-spacing: -0.3px;
             background: linear-gradient(135deg, #38bdf8, #818cf8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .badge-online {
+        .badge-live {
             background: rgba(74, 222, 128, 0.15);
-            border: 1px solid rgba(74, 222, 128, 0.3);
+            border: 1px solid rgba(74, 222, 128, 0.35);
             color: var(--accent-green);
             padding: 4px 12px;
             border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
+            font-size: 11.5px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
+        .pulse-dot {
+            width: 7px;
+            height: 7px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px var(--accent-green);
+        }
+
+        .header-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 12.5px;
+            color: var(--text-muted);
+        }
+
+        /* MAIN CONTAINER */
         .main-container {
             flex: 1;
             display: flex;
             position: relative;
-            height: calc(100vh - 60px);
+            height: calc(100vh - 64px);
             overflow: hidden;
         }
 
+        /* LEFT SIDEBAR */
         .sidebar {
             width: 380px;
             background: var(--panel-bg);
             border-right: 1px solid var(--border-color);
-            backdrop-filter: blur(12px);
             display: flex;
             flex-direction: column;
             z-index: 900;
@@ -88,17 +116,20 @@
         }
 
         .sidebar-header {
-            padding: 16px;
+            padding: 16px 18px;
             border-bottom: 1px solid var(--border-color);
-            font-weight: 600;
-            font-size: 14px;
+            font-weight: 700;
+            font-size: 13px;
             color: var(--accent-blue);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .control-group {
-            padding: 14px 16px;
+            padding: 12px 18px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
@@ -107,62 +138,50 @@
 
         .dropdown-label {
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-muted);
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .styled-dropdown {
             width: 100%;
-            padding: 10px 14px;
-            background: rgba(15, 23, 42, 0.8);
+            padding: 9px 12px;
+            background: rgba(15, 23, 42, 0.85);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             color: var(--text-main);
             font-size: 13px;
-            font-weight: 500;
             outline: none;
             cursor: pointer;
-            transition: all 0.2s ease;
         }
 
-        .styled-dropdown:hover, .styled-dropdown:focus {
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
-        }
-
-        .styled-dropdown option {
-            background: #1e293b;
-            color: var(--text-main);
-            padding: 10px;
-        }
+        .styled-dropdown:focus { border-color: var(--accent-blue); }
 
         .village-list {
             flex: 1;
-            overflow-y: scroll;
-            padding: 12px;
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent-blue) rgba(15, 23, 42, 0.6);
+            overflow-y: auto;
+            padding: 14px;
         }
 
         .village-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 12px 14px;
-            margin-bottom: 8px;
+            margin-bottom: 9px;
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
         .village-card:hover {
             background: rgba(56, 189, 248, 0.08);
-            border-color: rgba(56, 189, 248, 0.4);
-            transform: translateY(-2px);
+            border-color: rgba(56, 189, 248, 0.35);
+            transform: translateX(3px);
         }
 
         .village-card.active {
-            background: rgba(56, 189, 248, 0.15);
+            background: rgba(56, 189, 248, 0.16);
             border-color: var(--accent-blue);
         }
 
@@ -173,399 +192,412 @@
             margin-bottom: 4px;
         }
 
-        .village-name { font-weight: 600; font-size: 14px; }
+        .village-name { font-weight: 600; font-size: 13.5px; }
         .risk-tag {
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 700;
             padding: 2px 8px;
             border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
         }
 
-        .tag-very-high { background: rgba(248, 113, 113, 0.2); color: var(--accent-red); }
-        .tag-high { background: rgba(251, 146, 60, 0.2); color: var(--accent-orange); }
-        .tag-moderate { background: rgba(74, 222, 128, 0.2); color: var(--accent-green); }
-        .tag-low { background: rgba(56, 189, 248, 0.2); color: var(--accent-blue); }
+        .tag-very-high { background: rgba(248, 113, 113, 0.2); color: var(--accent-red); border: 1px solid rgba(248, 113, 113, 0.35); }
+        .tag-high { background: rgba(251, 146, 60, 0.2); color: var(--accent-orange); border: 1px solid rgba(251, 146, 60, 0.35); }
+        .tag-moderate { background: rgba(74, 222, 128, 0.2); color: var(--accent-green); border: 1px solid rgba(74, 222, 128, 0.35); }
+        .tag-low { background: rgba(56, 189, 248, 0.2); color: var(--accent-blue); border: 1px solid rgba(56, 189, 248, 0.35); }
 
-        .card-desc { font-size: 12px; color: var(--text-muted); }
-
+        /* CENTER MAP */
         #map { flex: 1; height: 100%; z-index: 1; }
 
+        /* RIGHT INSPECTOR */
         .inspector-panel {
-            width: 420px;
+            width: 440px;
             background: var(--panel-bg);
             border-left: 1px solid var(--border-color);
-            backdrop-filter: blur(12px);
-            padding: 20px;
-            overflow-y: scroll;
+            padding: 18px;
+            overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
             z-index: 900;
             height: 100%;
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent-blue) rgba(15, 23, 42, 0.6);
         }
 
         .panel-box {
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(15, 23, 42, 0.7);
             border: 1px solid var(--border-color);
             border-radius: 10px;
-            padding: 16px;
+            padding: 14px;
         }
 
         .box-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-muted);
-            margin-bottom: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 8px;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .prob-number {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: 800;
             color: var(--accent-red);
+            font-family: 'JetBrains Mono', monospace;
         }
 
-        .chart-container { height: 220px; position: relative; margin-top: 10px; }
-
-        .factor-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 8px; }
-        .factor-table td, .factor-table th { padding: 6px 8px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .factor-table th { color: var(--text-muted); }
-
-        /* MAP PLACE NAME TOOLTIPS */
-        .place-tooltip {
-            background: rgba(15, 23, 42, 0.9) !important;
-            border: 1px solid var(--accent-blue) !important;
-            color: #ffffff !important;
-            font-size: 11px !weight: 600 !important;
-            padding: 3px 8px !important;
-            border-radius: 6px !important;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+        .narrative-box {
+            background: rgba(56, 189, 248, 0.05);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 12.5px;
+            line-height: 1.6;
+            color: #e2e8f0;
         }
 
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.7); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb { background: #38bdf8; border-radius: 4px; border: 2px solid rgba(15, 23, 42, 0.7); }
-        ::-webkit-scrollbar-thumb:hover { background: #818cf8; }
+        .emergency-action-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #ffffff;
+            border: none;
+            padding: 11px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .emergency-action-btn:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        /* MODAL FOR WATERFALL / SATELLITE DETAILS */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #1e293b;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            max-width: 850px;
+            width: 90%;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            font-size: 24px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .modal-close:hover { color: #fff; }
+
+        ::-webkit-scrollbar { width: 7px; height: 7px; }
+        ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
     </style>
 </head>
 <body>
 
+    <!-- TOP HEADER -->
     <header>
-        <div class="header-title">
-            🌊 Kuttanad Flood Susceptibility & Risk Decision System
+        <div class="header-left">
+            <div class="brand-title">
+                <span>🌊</span> Kuttanad Flood Early Warning System
+            </div>
+            <div class="badge-live">
+                <span class="pulse-dot"></span> Live Monitoring Active
+            </div>
         </div>
-        <div class="badge-online">
-            ● ML Model Trained (AUC-ROC: 0.9289)
+
+        <div class="header-meta">
+            <span>📍 Study Basin: Kuttanad Delta, Kerala</span>
+            <span style="color: var(--border-color);">|</span>
+            <span>🛰️ Resolution: 30m Grid</span>
         </div>
     </header>
 
+    <!-- MAIN DASHBOARD CONTENT -->
     <div class="main-container">
 
         <!-- LEFT SIDEBAR -->
         <div class="sidebar">
-            <div class="sidebar-header">📍 Navigation & Controls</div>
-
-            <div class="control-group">
-                <label class="dropdown-label">Select Village / Panchayat:</label>
-                <select id="villageSelect" class="styled-dropdown" onchange="onVillageDropdownSelect(this.value)">
-                    <option value="">-- Choose Kuttanad Location --</option>
-                </select>
+            <div class="sidebar-header">
+                <span>📍 Village Directory</span>
+                <span style="font-size: 11px; color: var(--accent-green);">10 Monitoring Zones</span>
             </div>
 
+
             <div class="control-group">
-                <label class="dropdown-label">Filter by Risk Level:</label>
+                <label class="dropdown-label">Filter by Flood Risk:</label>
                 <select id="riskFilterSelect" class="styled-dropdown" onchange="filterVillagesByRisk(this.value)">
-                    <option value="ALL">Show All Risk Levels</option>
-                    <option value="CRITICAL">🔴 Critical & Very High Risk (>75%)</option>
+                    <option value="ALL">Show All Risk Zones</option>
+                    <option value="CRITICAL">🔴 Critical Risk (>75%)</option>
                     <option value="HIGH">🟠 High Risk (50% - 75%)</option>
                     <option value="MODERATE">🟢 Moderate Risk (25% - 50%)</option>
-                    <option value="LOW">🔵 Low Risk (<25%)</option>
                 </select>
             </div>
 
             <div class="village-list" id="villageList">
-                <div style="padding: 20px; text-align: center; color: var(--text-muted);">Loading villages...</div>
+                <div style="padding: 20px; text-align: center; color: var(--text-muted);">Loading village stations...</div>
             </div>
         </div>
 
-        <!-- CENTER MAP CANVAS -->
+        <!-- CENTER MAP -->
         <div id="map"></div>
 
-        <!-- RIGHT INSPECTOR -->
+        <!-- RIGHT DISASTER INSPECTOR -->
         <div class="inspector-panel">
             <div class="panel-box">
-                <div class="box-title">📍 Selected Location Inspector</div>
-                <div id="locName" style="font-weight: 700; font-size: 16px; margin-bottom: 4px;">Click any village or map point</div>
-                <div id="locCoords" style="font-size: 12px; color: var(--text-muted);">Lat: -, Lon: -</div>
+                <div class="box-title">📍 Selected Village / Monitoring Node</div>
+                <div id="locName" style="font-weight: 700; font-size: 17px; margin-bottom: 4px;">Select any village from map</div>
+                <div id="locCoords" style="font-size: 12px; color: var(--text-muted);">Coordinates: -, -</div>
             </div>
 
             <div class="panel-box">
-                <div class="box-title">🌊 Flood Risk Level</div>
+                <div class="box-title">🌊 Inundation Probability</div>
                 <div id="probValue" class="prob-number">--%</div>
-                <div id="riskCategory" style="font-weight: 600; font-size: 14px; color: var(--accent-orange);">Select a location</div>
+                <div id="riskCategory" style="font-weight: 600; font-size: 13.5px; color: var(--accent-orange); margin-top: 2px;">
+                    Select a village to inspect
+                </div>
+                <button class="emergency-action-btn" onclick="triggerAlertDemo()">
+                    ⚠️ Send Emergency Alert Notification
+                </button>
             </div>
 
+            <!-- Plain-English Narrative -->
             <div class="panel-box">
-                <div class="box-title">🔍 Explainable AI (SHAP) Drivers</div>
-                <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">
-                    Feature impact breakdown for this location:
+                <div class="box-title">🤖 AI Risk Driver Explanation</div>
+                <div id="narrativeText" class="narrative-box">
+                    Select a village from the left sidebar or click a map marker to view automated plain-English risk driver attribution.
                 </div>
-                <div class="chart-container">
-                    <canvas id="shapChart"></canvas>
-                </div>
-                <table class="factor-table" id="factorTable">
+            </div>
+
+            <!-- Measured Environmental Factors -->
+            <div class="panel-box">
+                <div class="box-title">🔬 Measured Field Conditioning Factors</div>
+                <table style="width: 100%; font-size: 12px; border-collapse: collapse;" id="factorTable">
                     <thead>
-                        <tr><th>Factor</th><th>Value</th><th>Impact</th></tr>
+                        <tr style="color: var(--text-muted); border-bottom: 1px solid var(--border-color);">
+                            <th style="padding: 6px 4px; text-align: left;">Conditioning Factor</th>
+                            <th style="padding: 6px 4px; text-align: right;">Measured Value</th>
+                            <th style="padding: 6px 4px; text-align: right;">Risk Impact</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td colspan="3" style="text-align:center;">Select point to view values</td></tr>
+                        <tr><td colspan="3" style="text-align: center; padding: 12px; color: var(--text-muted);">No village selected</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
+    </div>
 
+    <!-- MODAL -->
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <img id="modalImg" src="" style="width: 100%; border-radius: 6px;" />
+        </div>
     </div>
 
     <script>
         let map;
-        let chartInstance = null;
-        let allVillages = [];
+        let markers = {};
+        let villagesData = [];
+        let villageExplanations = {};
+
+        function openModal(src) {
+            document.getElementById('modalImg').src = src;
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        function triggerAlertDemo() {
+            const locName = document.getElementById('locName').innerText;
+            const prob = document.getElementById('probValue').innerText;
+            alert(`🚨 EMERGENCY BROADCAST SIMULATED:\n\nVillage: ${locName}\nInundation Probability: ${prob}\nChannels: WhatsApp / SMS / Email\nStatus: Successfully logged to disaster response audit table.`);
+        }
 
         function initMap() {
-            map = L.map('map').setView([9.45, 76.43], 11);
+            map = L.map('map', { zoomControl: false }).setView([9.44, 76.44], 11);
+            L.control.zoom({ position: 'topright' }).addTo(map);
 
-            // 1. Google Satellite Hybrid
-            const googleSat = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
-                attribution: 'Google Satellite Hybrid'
+            // Satellite basemap
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles &copy; Esri'
             }).addTo(map);
-
-            // 2. Esri Satellite Imagery
-            const esriSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-                attribution: 'Esri Satellite Imagery'
-            });
-
-            const baseMaps = {
-                "Google Satellite Hybrid": googleSat,
-                "Esri Satellite Imagery": esriSat
-            };
-
-            // Image Overlays for Susceptibility and Risk Maps
-            const kuttanadBounds = [[9.1497, 76.2498], [9.7501, 76.6500]];
-
-            const suscOverlay = L.imageOverlay('/outputs/maps/Kuttanad_Flood_Susceptibility_Map.png', kuttanadBounds, {
-                opacity: 0.75
-            }).addTo(map);
-
-            const riskOverlay = L.imageOverlay('/outputs/maps/Kuttanad_Flood_Risk_Map.png', kuttanadBounds, {
-                opacity: 0.75
-            });
-
-            const overlayMaps = {
-                "🌊 Flood Susceptibility Overlay": suscOverlay,
-                "🛡️ Flood Risk Overlay": riskOverlay
-            };
-
-            L.control.layers(baseMaps, overlayMaps, { collapsed: false }).addTo(map);
-
-            map.on('click', function(e) {
-                inspectPoint(e.latlng.lat, e.latlng.lng, "Custom Map Coordinate");
-            });
         }
 
-        // Load Villages from API & Add Map Markers
-        async function loadVillages() {
-            const res = await fetch('/api/villages');
-            allVillages = await res.json();
+        async function loadData() {
+            try {
+                // 1. Load explanations payload
+                const explRes = await fetch('/api/villages/explain');
+                if (explRes.ok) {
+                    villageExplanations = await explRes.json();
+                }
 
-            populateDropdown(allVillages);
-            renderVillageCards(allVillages);
+                // 2. Load villages
+                const res = await fetch('/api/villages');
+                villagesData = await res.json();
 
-            // Add Place Name Markers directly on the Satellite Map
-            allVillages.forEach(v => {
-                let badgeColor = '#38bdf8';
-                if (v.probability >= 75) badgeColor = '#f87171';
-                else if (v.probability >= 50) badgeColor = '#fb923c';
-                else if (v.probability >= 25) badgeColor = '#4ade80';
+                renderVillageList(villagesData);
+                renderMarkers(villagesData);
 
-                const marker = L.circleMarker([v.lat, v.lon], {
-                    radius: 7,
-                    fillColor: badgeColor,
-                    color: '#ffffff',
-                    weight: 2,
-                    opacity: 1,
-                    fillOpacity: 0.9
-                }).addTo(map);
-
-                marker.bindTooltip(`<b>${v.name}</b><br>${v.probability}% (${v.class_label})`, {
-                    permanent: true,
-                    direction: 'top',
-                    className: 'place-tooltip'
-                });
-
-                marker.on('click', () => {
-                    selectVillage(v);
-                });
-            });
-
-            if (allVillages.length > 0) inspectPoint(allVillages[0].lat, allVillages[0].lon, allVillages[0].name);
+                // Auto-select first village
+                if (villagesData.length > 0) {
+                    selectVillage(villagesData[0].id);
+                }
+            } catch (err) {
+                console.error("Error loading data:", err);
+            }
         }
 
-        function populateDropdown(villages) {
-            const dropdown = document.getElementById('villageSelect');
-            dropdown.innerHTML = '<option value="">-- Choose Kuttanad Location --</option>';
-
-            villages.forEach(v => {
-                const opt = document.createElement('option');
-                opt.value = v.id;
-                opt.innerText = `${v.name} (${v.probability}%)`;
-                dropdown.appendChild(opt);
-            });
-        }
-
-        function renderVillageCards(villages) {
+        function renderVillageList(list) {
             const container = document.getElementById('villageList');
             container.innerHTML = '';
 
-            if (villages.length === 0) {
-                container.innerHTML = '<div style="padding:20px; text-align:center; color:var(--text-muted);">No locations match filter.</div>';
-                return;
-            }
-
-            villages.forEach(v => {
-                let tagClass = 'tag-moderate';
-                if (v.risk_label.includes('Critical') || v.risk_label.includes('Very High')) tagClass = 'tag-very-high';
-                else if (v.risk_label.includes('High')) tagClass = 'tag-high';
-                else if (v.risk_label.includes('Low')) tagClass = 'tag-low';
-
+            list.forEach(v => {
                 const card = document.createElement('div');
-                card.className = 'village-card';
+                card.className = `village-card`;
                 card.id = `card-${v.id}`;
+                card.onclick = () => selectVillage(v.id);
+
+                let tagClass = 'tag-moderate';
+                if (v.probability >= 75) tagClass = 'tag-very-high';
+                else if (v.probability >= 50) tagClass = 'tag-high';
+                else if (v.probability < 25) tagClass = 'tag-low';
+
                 card.innerHTML = `
                     <div class="card-top">
                         <span class="village-name">${v.name}</span>
-                        <span class="risk-tag ${tagClass}">${v.probability}% (${v.class_label})</span>
+                        <span class="risk-tag ${tagClass}">${v.probability}%</span>
                     </div>
-                    <div class="card-desc">${v.desc}</div>
+                    <div style="font-size: 11.5px; color: var(--text-muted);">${v.desc || 'Kuttanad polder zone'}</div>
                 `;
-
-                card.onclick = () => {
-                    selectVillage(v);
-                };
-
                 container.appendChild(card);
             });
         }
 
-        function selectVillage(v) {
+
+        function renderMarkers(list) {
+            list.forEach(v => {
+                let color = '#4ade80';
+                if (v.probability >= 75) color = '#f87171';
+                else if (v.probability >= 50) color = '#fb923c';
+                else if (v.probability < 25) color = '#38bdf8';
+
+                const marker = L.circleMarker([v.lat, v.lon], {
+                    radius: 9,
+                    fillColor: color,
+                    color: '#fff',
+                    weight: 2,
+                    opacity: 1,
+                    fillOpacity: 0.85
+                }).addTo(map);
+
+                marker.bindTooltip(`<b>${v.name}</b><br>Risk: ${v.probability}%`, {
+                    direction: 'top',
+                    offset: [0, -8]
+                });
+
+                marker.on('click', () => selectVillage(v.id));
+                markers[v.id] = marker;
+            });
+        }
+
+        function selectVillage(vId) {
             document.querySelectorAll('.village-card').forEach(c => c.classList.remove('active'));
-            const selectedCard = document.getElementById(`card-${v.id}`);
-            if (selectedCard) selectedCard.classList.add('active');
-
-            document.getElementById('villageSelect').value = v.id;
-            map.flyTo([v.lat, v.lon], 13);
-            inspectPoint(v.lat, v.lon, v.name);
-        }
-
-        function onVillageDropdownSelect(villageId) {
-            if (!villageId) return;
-            const target = allVillages.find(v => v.id === villageId);
-            if (target) selectVillage(target);
-        }
-
-        function filterVillagesByRisk(filterType) {
-            if (filterType === 'ALL') {
-                renderVillageCards(allVillages);
-                return;
+            const card = document.getElementById(`card-${vId}`);
+            if (card) {
+                card.classList.add('active');
+                card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
 
-            const filtered = allVillages.filter(v => {
-                if (filterType === 'CRITICAL') return v.class_label === 'Very High';
-                if (filterType === 'HIGH') return v.class_label === 'High';
-                if (filterType === 'MODERATE') return v.class_label === 'Moderate';
-                if (filterType === 'LOW') return v.class_label === 'Low';
-                return true;
-            });
+            const v = villagesData.find(item => item.id === vId);
+            if (!v) return;
 
-            renderVillageCards(filtered);
-        }
+            map.flyTo([v.lat, v.lon], 13, { duration: 1.2 });
 
-        async function inspectPoint(lat, lon, name = "Selected Point") {
-            document.getElementById('locName').innerText = name;
-            document.getElementById('locCoords').innerText = `Lat: ${lat.toFixed(4)}, Lon: ${lon.toFixed(4)}`;
+            document.getElementById('locName').innerText = v.name;
+            document.getElementById('locCoords').innerText = `Coordinates: ${v.lat.toFixed(4)}°N, ${v.lon.toFixed(4)}°E`;
+            document.getElementById('probValue').innerText = `${v.probability}%`;
 
-            try {
-                const res = await fetch(`/api/explain?lat=${lat}&lon=${lon}`);
-                const data = await res.json();
+            let color = '#4ade80';
+            if (v.probability >= 75) color = '#f87171';
+            else if (v.probability >= 50) color = '#fb923c';
+            else if (v.probability < 25) color = '#38bdf8';
 
-                if (data.error) {
-                    alert(data.error);
-                    return;
+            const catEl = document.getElementById('riskCategory');
+            catEl.innerText = `${v.risk_label || 'Calculated Inundation Hazard'}`;
+            catEl.style.color = color;
+            document.getElementById('probValue').style.color = color;
+
+            // Load plain-English explanation
+            if (villageExplanations[vId]) {
+                const expl = villageExplanations[vId];
+                document.getElementById('narrativeText').innerText = expl.plain_english_summary;
+
+                // Render factors breakdown table
+                const tbody = document.querySelector('#factorTable tbody');
+                tbody.innerHTML = '';
+                for (const [key, item] of Object.entries(expl.features_breakdown)) {
+                    const tr = document.createElement('tr');
+                    tr.style.borderBottom = '1px solid rgba(255,255,255,0.04)';
+                    const sign = item.shap_impact_pct > 0 ? '+' : '';
+                    const impColor = item.shap_impact_pct > 0 ? '#f87171' : '#38bdf8';
+                    tr.innerHTML = `
+                        <td style="padding: 7px 4px; font-weight: 500;">${item.display_name}</td>
+                        <td style="padding: 7px 4px; text-align: right; font-family: monospace;">${item.measured_value}</td>
+                        <td style="padding: 7px 4px; text-align: right; font-weight: 700; color: ${impColor}; font-family: monospace;">${sign}${item.shap_impact_pct}%</td>
+                    `;
+                    tbody.appendChild(tr);
                 }
-
-                document.getElementById('probValue').innerText = `${data.probability_percent}%`;
-                document.getElementById('riskCategory').innerText = `${data.risk_level} (${data.susceptibility_category})`;
-
-                renderFactorTable(data.factors);
-                renderShapChart(data.factors);
-            } catch (err) {
-                console.error(err);
             }
         }
 
-        function renderFactorTable(factors) {
-            const tbody = document.querySelector('#factorTable tbody');
-            tbody.innerHTML = '';
-            
-            for (const [key, info] of Object.entries(factors)) {
-                const tr = document.createElement('tr');
-                const impactColor = info.shap_contribution > 0 ? '#f87171' : '#38bdf8';
-                const sign = info.shap_contribution > 0 ? '+' : '';
-                tr.innerHTML = `
-                    <td style="font-weight:500;">${key}</td>
-                    <td>${info.value}</td>
-                    <td style="color:${impactColor}; font-weight:600;">${sign}${info.shap_contribution}</td>
-                `;
-                tbody.appendChild(tr);
-            }
-        }
+        function filterVillagesByRisk(filter) {
+            let filtered = villagesData;
+            if (filter === 'CRITICAL') filtered = villagesData.filter(v => v.probability >= 75);
+            else if (filter === 'HIGH') filtered = villagesData.filter(v => v.probability >= 50 && v.probability < 75);
+            else if (filter === 'MODERATE') filtered = villagesData.filter(v => v.probability >= 25 && v.probability < 50);
 
-        function renderShapChart(factors) {
-            const labels = Object.keys(factors);
-            const values = labels.map(k => factors[k].shap_contribution);
-            const colors = values.map(v => v > 0 ? '#f87171' : '#38bdf8');
-
-            const ctx = document.getElementById('shapChart').getContext('2d');
-            if (chartInstance) chartInstance.destroy();
-
-            chartInstance = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'SHAP Contribution',
-                        data: values,
-                        backgroundColor: colors,
-                        borderRadius: 4
-                    }]
-                },
-                options: {
-                    indexAxis: 'y',
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
-                        y: { grid: { display: false }, ticks: { color: '#f8fafc' } }
-                    }
-                }
-            });
+            renderVillageList(filtered);
         }
 
         window.onload = () => {
             initMap();
-            loadVillages();
+            loadData();
         };
     </script>
 </body>

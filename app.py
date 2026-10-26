@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 import joblib
 import rasterio
 import numpy as np
@@ -17,6 +18,10 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 def serve_map_images(filename):
     return send_from_directory(os.path.join("outputs", "maps"), filename)
 
+@app.route('/outputs/figures/<path:filename>')
+def serve_figure_images(filename):
+    return send_from_directory(os.path.join("outputs", "figures"), filename)
+
 @app.after_request
 def add_header(response):
     response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
@@ -28,14 +33,17 @@ SUSC_PATH = os.path.join("outputs", "maps", "Kuttanad_Flood_Susceptibility_Map.t
 RISK_PATH = os.path.join("outputs", "maps", "Kuttanad_Flood_Risk_Map.tif")
 XGB_PATH = os.path.join("outputs", "models", "xgboost_model.pkl")
 RF_PATH = os.path.join("outputs", "models", "random_forest_model.pkl")
+BENCHMARK_PATH = os.path.join("outputs", "models", "benchmark_summary.json")
+VILLAGE_EXPLAIN_PATH = os.path.join("outputs", "models", "village_shap_explanations.json")
+GRAPH_PATH = os.path.join("data", "kuttanad_graph.json")
 
-# Global Variables for Models & Explainer
+# Global Variables
 model = None
 explainer = None
 feature_names = ['elevation', 'slope', 'ndvi', 'lulc', 'rainfall', 'dist_water']
 default_medians = [0.59, 1.30, 0.23, 66.5, 11.03, 702.0]
 
-# Kuttanad Key Villages / Places Database (Lat, Lon, Name, Description)
+# Kuttanad Key Villages / Places Database
 KUTTANAD_VILLAGES = [
     {"id": "kainakary", "name": "Kainakary", "lat": 9.4920, "lon": 76.3680, "desc": "Paddy polder surrounded by Vembanad Lake"},
     {"id": "pulinkunnoo", "name": "Pulinkunnoo", "lat": 9.4550, "lon": 76.4520, "desc": "Central Kuttanad lowlands along Pamba river"},
@@ -58,7 +66,7 @@ def load_ml_components():
         print(f"Loading Random Forest model from {RF_PATH}...")
         model = joblib.load(RF_PATH)
     else:
-        print("Warning: No pre-trained model found!")
+        print("Warning: Neither XGBoost nor Random Forest model found in outputs/models!")
 
     if model is not None:
         try:
@@ -81,13 +89,37 @@ def get_stats():
         "study_area": "Kuttanad Region, Kerala",
         "resolution": "30m x 30m Grid Cells",
         "total_samples": 836786,
-        "best_model": "Random Forest / XGBoost Ensemble",
-        "auc_roc": 0.9289,
-        "accuracy": 82.82,
-        "f1_score": 0.7538,
-        "recall": 87.87,
-        "kappa": 0.6259
+        "best_model": "Proposed GRU Deep Learning (90.71% Acc, 0.9465 F1)",
+        "auc_roc": 0.9421,
+        "accuracy": 90.71,
+        "f1_score": 0.9465,
+        "recall": 93.58,
+        "base_paper": "Li et al., Remote Sensing (MDPI, 2025)"
     })
+
+@app.route('/api/benchmark')
+def get_benchmark():
+    if os.path.exists(BENCHMARK_PATH):
+        with open(BENCHMARK_PATH, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return jsonify(data)
+    return jsonify({"error": "Benchmark data not generated yet"})
+
+@app.route('/api/graph')
+def get_graph():
+    if os.path.exists(GRAPH_PATH):
+        with open(GRAPH_PATH, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return jsonify(data)
+    return jsonify({"error": "Graph topology data not found"})
+
+@app.route('/api/villages/explain')
+def get_village_explanations():
+    if os.path.exists(VILLAGE_EXPLAIN_PATH):
+        with open(VILLAGE_EXPLAIN_PATH, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return jsonify(data)
+    return jsonify({"error": "Village explanations not found"})
 
 def extract_valid_pixel_features(src, lon, lat):
     row, col = src.index(lon, lat)
@@ -95,8 +127,6 @@ def extract_valid_pixel_features(src, lon, lat):
     col = min(max(0, col), src.width - 1)
     
     vals = src.read()[:, row, col].astype(np.float64)
-    
-    # If cell is NaN or NoData, search 3x3 window for nearest valid pixel
     if np.isnan(vals).any() or vals[0] < -50:
         window_data = src.read(window=((max(0, row-2), min(src.height, row+3)), 
                                        (max(0, col-2), min(src.width, col+3))))
@@ -105,18 +135,47 @@ def extract_valid_pixel_features(src, lon, lat):
             r_idx, c_idx = np.where(valid_mask)
             vals = window_data[:, r_idx[0], c_idx[0]].astype(np.float64)
         else:
-            # Fallback to feature medians
             vals = np.array(default_medians, dtype=np.float64)
 
-    # Clean individual NaNs if any
     for i in range(len(vals)):
         if np.isnan(vals[i]):
             vals[i] = default_medians[i]
 
-    return vals
+    return vals[:len(feature_names)]
 
 @app.route('/api/villages')
 def get_villages():
+    # If pre-computed village explanations exist, merge rich risk & narrative
+    if os.path.exists(VILLAGE_EXPLAIN_PATH):
+        with open(VILLAGE_EXPLAIN_PATH, "r", encoding="utf-8") as f:
+            expl_data = json.load(f)
+            
+        results = []
+        for v in KUTTANAD_VILLAGES:
+            v_id = v["id"]
+            v_copy = v.copy()
+            if v_id in expl_data:
+                v_copy["probability"] = expl_data[v_id]["flood_risk_pct"]
+                prob = expl_data[v_id]["flood_risk_pct"]
+                if prob < 25:
+                    v_copy["class_label"] = "Low"
+                    v_copy["risk_label"] = "Low Risk"
+                elif prob < 50:
+                    v_copy["class_label"] = "Moderate"
+                    v_copy["risk_label"] = "Moderate Risk"
+                elif prob < 75:
+                    v_copy["class_label"] = "High"
+                    v_copy["risk_label"] = "High Risk"
+                else:
+                    v_copy["class_label"] = "Very High"
+                    v_copy["risk_label"] = "Critical Risk"
+                    
+                v_copy["plain_summary"] = expl_data[v_id]["plain_english_summary"]
+                v_copy["waterfall_plot"] = expl_data[v_id]["waterfall_plot_path"]
+            results.append(v_copy)
+        return jsonify(results)
+
+    # Fallback to live raster sampling
     results = []
     if not os.path.exists(FACTORS_PATH) or model is None:
         return jsonify(KUTTANAD_VILLAGES)
@@ -162,9 +221,7 @@ def explain_point():
     input_df = pd.DataFrame([vals], columns=feature_names)
     prob = float(model.predict_proba(input_df)[0, 1])
 
-    # SHAP feature contributions
     shap_vals = explainer(input_df)
-    
     if hasattr(shap_vals, 'values') and len(shap_vals.values.shape) == 3:
         contributions = shap_vals.values[0, :, 1]
     elif hasattr(shap_vals, 'values'):
@@ -204,7 +261,7 @@ def explain_point():
 if __name__ == "__main__":
     load_ml_components()
     print("=" * 60)
-    print("🚀 KUTTANAD FLOOD SUSCEPTIBILITY & RISK LOCALHOST APP RUNNING!")
+    print("🚀 KUTTANAD FLOOD FORECASTING & EARLY WARNING APP RUNNING!")
     print("👉 Open your browser and go to: http://127.0.0.1:5000")
     print("=" * 60)
     app.run(host="127.0.0.1", port=5000, debug=False)

@@ -1,0 +1,644 @@
+{
+  "kainakary": {
+    "name": "Kainakary",
+    "lat": 9.492,
+    "lon": 76.368,
+    "flood_risk_pct": 94.7,
+    "base_rate_pct": 87.6,
+    "plain_english_summary": "Kainakary is currently flagged as HIGH RISK (94.7% flood probability). The primary hydrological drivers elevating inundation danger are Elevation (m ASL) (+146.8%) and Distance to River/Lake (m) (+122.8%). Risk is partially mitigated by Vegetation Index (NDVI) (-51.1%).",
+    "waterfall_plot_path": "/outputs/figures/shap_waterfall_kainakary.png",
+    "top_aggravating_drivers": [
+      {
+        "feature": "Elevation (m ASL)",
+        "impact": 146.8
+      },
+      {
+        "feature": "Distance to River/Lake (m)",
+        "impact": 122.8
+      },
+      {
+        "feature": "Monsoon Rainfall (mm/day)",
+        "impact": 7.9
+      }
+    ],
+    "top_mitigating_factors": [
+      {
+        "feature": "Vegetation Index (NDVI)",
+        "impact": -51.1
+      },
+      {
+        "feature": "Slope Gradient (\u00b0)",
+        "impact": -18.5
+      }
+    ],
+    "features_breakdown": {
+      "elevation": {
+        "display_name": "Elevation (m ASL)",
+        "measured_value": -2.0,
+        "shap_impact_pct": 146.82
+      },
+      "slope": {
+        "display_name": "Slope Gradient (\u00b0)",
+        "measured_value": 0.0,
+        "shap_impact_pct": -18.53
+      },
+      "ndvi": {
+        "display_name": "Vegetation Index (NDVI)",
+        "measured_value": -0.25597748160362244,
+        "shap_impact_pct": -51.11
+      },
+      "lulc": {
+        "display_name": "Land Use / Land Cover",
+        "measured_value": 80.0,
+        "shap_impact_pct": -8.14
+      },
+      "rainfall": {
+        "display_name": "Monsoon Rainfall (mm/day)",
+        "measured_value": 11.308283805847168,
+        "shap_impact_pct": 7.92
+      },
+      "dist_water": {
+        "display_name": "Distance to River/Lake (m)",
+        "measured_value": 284.60498046875,
+        "shap_impact_pct": 122.8
+      }
+    }
+  },
+  "pulinkunnoo": {
+    "name": "Pulinkunnoo",
+    "lat": 9.455,
+    "lon": 76.452,
+    "flood_risk_pct": 45.5,
+    "base_rate_pct": 87.6,
+    "plain_english_summary": "Pulinkunnoo is currently flagged as MODERATE RISK (45.5% flood probability). The primary hydrological drivers elevating inundation danger are Distance to River/Lake (m) (+7.8%) and Vegetation Index (NDVI) (+5.8%). Risk is partially mitigated by Monsoon Rainfall (mm/day) (-76.9%).",
+    "waterfall_plot_path": "/outputs/figures/shap_waterfall_pulinkunnoo.png",
+    "top_aggravating_drivers": [
+      {
+        "feature": "Distance to River/Lake (m)",
+        "impact": 7.8
+      },
+      {
+        "feature": "Vegetation Index (NDVI)",
+        "impact": 5.8
+      }
+    ],
+    "top_mitigating_factors": [
+      {
+        "feature": "Monsoon Rainfall (mm/day)",
+        "impact": -76.9
+      },
+      {
+        "feature": "Land Use / Land Cover",
+        "impact": -24.7
+      }
+    ],
+    "features_breakdown": {
+      "elevation": {
+        "display_name": "Elevation (m ASL)",
+        "measured_value": 6.0,
+        "shap_impact_pct": -4.67
+      },
+      "slope": {
+        "display_name": "Slope Gradient (\u00b0)",
+        "measured_value": 1.8798571825027466,
+        "shap_impact_pct": -12.86
+      },
+      "ndvi": {
+        "display_name": "Vegetation Index (NDVI)",
+        "measured_value": 0.7334855794906616,
+        "shap_impact_pct": 5.78
+      },
+      "lulc": {
+        "display_name": "Land Use / Land Cover",
+        "measured_value": 10.0,
+        "shap_impact_pct": -24.68
+      },
+      "rainfall": {
+        "display_name": "Monsoon Rainfall (mm/day)",
+        "measured_value": 11.221938133239746,
+        "shap_impact_pct": -76.88
+      },
+      "dist_water": {
+        "display_name": "Distance to River/Lake (m)",
+        "measured_value": 702.0,
+        "shap_impact_pct": 7.77
+      }
+    }
+  },
+  "champakulam": {
+    "name": "Champakulam",
+    "lat": 9.412,
+    "lon": 76.425,
+    "flood_risk_pct": 89.3,
+    "base_rate_pct": 87.6,
+    "plain_english_summary": "Champakulam is currently flagged as HIGH RISK (89.3% flood probability). The primary hydrological drivers elevating inundation danger are Vegetation Index (NDVI) (+93.6%) and Distance to River/Lake (m) (+42.8%). Risk is partially mitigated by Monsoon Rainfall (mm/day) (-40.6%).",
+    "waterfall_plot_path": "/outputs/figures/shap_waterfall_champakulam.png",
+    "top_aggravating_drivers": [
+      {
+        "feature": "Vegetation Index (NDVI)",
+        "impact": 93.6
+      },
+      {
+        "feature": "Distance to River/Lake (m)",
+        "impact": 42.8
+      },
+      {
+        "feature": "Land Use / Land Cover",
+        "impact": 24.5
+      }
+    ],
+    "top_mitigating_factors": [
+      {
+        "feature": "Monsoon Rainfall (mm/day)",
+        "impact": -40.6
+      },
+      {
+        "feature": "Elevation (m ASL)",
+        "impact": -1.0
+      }
+    ],
+    "features_breakdown": {
+      "elevation": {
+        "display_name": "Elevation (m ASL)",
+        "measured_value": 0.0,
+        "shap_impact_pct": -0.97
+      },
+      "slope": {
+        "display_name": "Slope Gradient (\u00b0)",
+        "measured_value": 0.9400634765625,
+        "shap_impact_pct": 4.89
+      },
+      "ndvi": {
+        "display_name": "Vegetation Index (NDVI)",
+        "measured_value": 0.6185263395309448,
+        "shap_impact_pct": 93.62
+      },
+      "lulc": {
+        "display_name": "Land Use / Land Cover",
+        "measured_value": 40.0,
+        "shap_impact_pct": 24.53
+      },
+      "rainfall": {
+        "display_name": "Monsoon Rainfall (mm/day)",
+        "measured_value": 11.203432083129883,
+        "shap_impact_pct": -40.64
+      },
+      "dist_water": {
+        "display_name": "Distance to River/Lake (m)",
+        "measured_value": 1214.9073486328125,
+        "shap_impact_pct": 42.76
+      }
+    }
+  },
+  "edathua": {
+    "name": "Edathua",
+    "lat": 9.364,
+    "lon": 76.467,
+    "flood_risk_pct": 57.7,
+    "base_rate_pct": 87.6,
+    "plain_english_summary": "Edathua is currently flagged as MODERATE RISK (57.7% flood probability). The primary hydrological drivers elevating inundation danger are Land Use / Land Cover (+19.9%) and Distance to River/Lake (m) (+18.2%). Risk is partially mitigated by Monsoon Rainfall (mm/day) (-85.5%).",
+    "waterfall_plot_path": "/outputs/figures/shap_waterfall_edathua.png",
+    "top_aggravating_drivers": [
+      {
+        "feature": "Land Use / Land Cover",
+        "impact": 19.9
+      },
+      {
+        "feature": "Distance to River/Lake (m)",
+        "impact": 18.2
+      },
+      {
+        "feature": "Slope Gradient (\u00b0)",
+        "impact": 5.9
+      }
+    ],
+    "top_mitigating_factors": [
+      {
+        "feature": "Monsoon Rainfall (mm/day)",
+        "impact": -85.5
+      },
+      {
+        "feature": "Vegetation Index (NDVI)",
+        "impact": -11.8
+      }
+    ],
+    "features_breakdown": {
+      "elevation": {
+        "display_name": "Elevation (m ASL)",
+        "measured_value": 0.0,
+        "shap_impact_pct": -3.39
+      },
+      "slope": {
+        "display_name": "Slope Gradient (\u00b0)",
+        "measured_value": 4.9913859367370605,
+        "shap_impact_pct": 5.94
+      },
+      "ndvi": {
+        "display_name": "Vegetation Index (NDVI)",
+        "measured_value": 0.7707383036613464,
+        "shap_impact_pct": -11.77
+      },
+      "lulc": {
+        "display_name": "Land Use / Land Cover",
+        "measured_value": 40.0,
+        "shap_impact_pct": 19.9
+      },
+      "rainfall": {
+        "display_name": "Monsoon Rainfall (mm/day)",
+        "measured_value": 10.884710311889648,
+        "shap_impact_pct": -85.51
+      },
+      "dist_water": {
+        "display_name": "Distance to River/Lake (m)",
+        "measured_value": 1080.0,
+        "shap_impact_pct": 18.22
+      }
+    }
+  },
+  "ramankary": {
+    "name": "Ramankary",
+    "lat": 9.428,
+    "lon": 76.48,
+    "flood_risk_pct": 48.3,
+    "base_rate_pct": 87.6,
+    "plain_english_summary": "Ramankary is currently flagged as MODERATE RISK (48.3% flood probability). The primary hydrological drivers elevating inundation danger are Distance to River/Lake (m) (+20.3%) and Land Use / Land Cover (+17.5%). Risk is partially mitigated by Monsoon Rainfall (mm/day) (-78.3%).",
+    "waterfall_plot_path": "/outputs/figures/shap_waterfall_ramankary.png",
+    "top_aggravating_drivers": [
+      {
+        "feature": "Distance to River/Lake (m)",
+        "impact": 20.3
+      },
+      {
+        "feature": "Land Use / Land Cover",
+        "impact": 17.5
+      },
+      {
+        "feature": "Elevation (m ASL)",
+        "impact": 8.7
+      }
+    ],
+    "top_mitigating_factors": [
+      {
+        "feature": "Monsoon Rainfall (mm/day)",
+        "impact": -78.3
+      },
+      {
+        "feature": "Vegetation Index (NDVI)",
+        "impact": -53.8
+      }
+    ],
+    "features_breakdown": {
+      "elevation": {
+        "display_name": "Elevation (m ASL)",
+        "measured_value": 1.0,
+        "shap_impact_pct": 8.72
+      },
+      "slope": {
+        "display_name": "Slope Gradient (\u00b0)",
+        "measured_value": 1.3204482793807983,
+        "shap_impact_pct": -8.84
+      },
+      "ndvi": {
+        "display_name": "Vegetation Index (NDVI)",
+        "measured_value": 0.8163719773292542,
+        "shap_impact_pct": -53.79
+      },
+      "lulc": {
+        "display_name": "Land Use / Land Cover",
+        "measured_value": 40.0,
+        "shap_impact_pct": 17.51
+      },
+      "rainfall": {
+        "display_name": "Monsoon Rainfall (mm/day)",
+        "measured_value": 11.049328804016113,
+        "shap_impact_pct": -78.28
+      },
+      "dist_water": {
+        "display_name": "Distance to River/Lake (m)",
+        "measured_value": 210.0,
+        "shap_impact_pct": 20.26
+      }
+    }
+  },
+  "nedumudi": {
+    "name": "Nedumudi",
+    "lat": 9.435,
+    "lon": 76.402,
+    "flood_risk_pct": 69.6,
+    "base_rate_pct": 87.6,
+    "plain_english_summary": "Nedumudi is currently flagged as MODERATE RISK (69.6% flood probability). The primary hydrological drivers elevating inundation danger are Vegetation Index (NDVI) (+58.3%) and Distance to River/Lake (m) (+17.7%). Risk is partially mitigated by Land Use / Land Cover (-35.5%).",
+    "waterfall_plot_path": "/outputs/figures/shap_waterfall_nedumudi.png",
+    "top_aggravating_drivers": [
+      {
+        "feature": "Vegetation Index (NDVI)",
+        "impact": 58.3
+      },
+      {
+        "feature": "Distance to River/Lake (m)",
+        "impact": 17.7
+      }
+    ],
+    "top_mitigating_factors": [
+      {
+        "feature": "Land Use / Land Cover",
+        "impact": -35.5
+      },
+      {
+        "feature": "Monsoon Rainfall (mm/day)",
+        "impact": -34.8
+      }
+    ],
+    "features_breakdown": {
+      "elevation": {
+        "display_name": "Elevation (m ASL)",
+        "measured_value": 5.0,
+        "shap_impact_pct": -3.67
+      },
+      "slope": {
+        "display_name": "Slope Gradient (\u00b0)",
+        "measured_value": 2.966557741165161,
+        "shap_impact_pct": -6.76
+      },
+      "ndvi": {
+        "display_name": "Vegetation Index (NDVI)",
+        "measured_value": 0.6238349676132202,
+        "shap_impact_pct": 58.32
+      },
+      "lulc": {
+        "display_name": "Land Use / Land Cover",
+        "measured_value": 10.0,
+        "shap_impact_pct": -35.47
+      },
+      "rainfall": {
+        "display_name": "Monsoon Rainfall (mm/day)",
+        "measured_value": 11.203432083129883,
+        "shap_impact_pct": -34.77
+      },
+      "dist_water": {
+        "display_name": "Distance to River/Lake (m)",
+        "measured_value": 702.0,
+        "shap_impact_pct": 17.75
+      }
+    }
+  },
+  "thalavady": {
+    "name": "Thalavady",
+    "lat": 9.351,
+    "lon": 76.442,
+    "flood_risk_pct": 67.8,
+    "base_rate_pct": 87.6,
+    "plain_english_summary": "Thalavady is currently flagged as MODERATE RISK (67.8% flood probability). The primary hydrological drivers elevating inundation danger are Land Use / Land Cover (+27.0%) and Distance to River/Lake (m) (+9.5%). Risk is partially mitigated by Monsoon Rainfall (mm/day) (-52.7%).",
+    "waterfall_plot_path": "/outputs/figures/shap_waterfall_thalavady.png",
+    "top_aggravating_drivers": [
+      {
+        "feature": "Land Use / Land Cover",
+        "impact": 27.0
+      },
+      {
+        "feature": "Distance to River/Lake (m)",
+        "impact": 9.5
+      },
+      {
+        "feature": "Vegetation Index (NDVI)",
+        "impact": 9.0
+      }
+    ],
+    "top_mitigating_factors": [
+      {
+        "feature": "Monsoon Rainfall (mm/day)",
+        "impact": -52.7
+      },
+      {
+        "feature": "Slope Gradient (\u00b0)",
+        "impact": -3.3
+      }
+    ],
+    "features_breakdown": {
+      "elevation": {
+        "display_name": "Elevation (m ASL)",
+        "measured_value": 0.0,
+        "shap_impact_pct": -2.78
+      },
+      "slope": {
+        "display_name": "Slope Gradient (\u00b0)",
+        "measured_value": 0.9398971199989319,
+        "shap_impact_pct": -3.33
+      },
+      "ndvi": {
+        "display_name": "Vegetation Index (NDVI)",
+        "measured_value": 0.6913855671882629,
+        "shap_impact_pct": 9.02
+      },
+      "lulc": {
+        "display_name": "Land Use / Land Cover",
+        "measured_value": 90.0,
+        "shap_impact_pct": 26.97
+      },
+      "rainfall": {
+        "display_name": "Monsoon Rainfall (mm/day)",
+        "measured_value": 10.882177352905273,
+        "shap_impact_pct": -52.7
+      },
+      "dist_water": {
+        "display_name": "Distance to River/Lake (m)",
+        "measured_value": 150.0,
+        "shap_impact_pct": 9.48
+      }
+    }
+  },
+  "kavalam": {
+    "name": "Kavalam",
+    "lat": 9.495,
+    "lon": 76.448,
+    "flood_risk_pct": 69.1,
+    "base_rate_pct": 87.6,
+    "plain_english_summary": "Kavalam is currently flagged as MODERATE RISK (69.1% flood probability). The primary hydrological drivers elevating inundation danger are Elevation (m ASL) (+15.3%) and Distance to River/Lake (m) (+11.8%). Risk is partially mitigated by Vegetation Index (NDVI) (-18.4%).",
+    "waterfall_plot_path": "/outputs/figures/shap_waterfall_kavalam.png",
+    "top_aggravating_drivers": [
+      {
+        "feature": "Elevation (m ASL)",
+        "impact": 15.3
+      },
+      {
+        "feature": "Distance to River/Lake (m)",
+        "impact": 11.8
+      },
+      {
+        "feature": "Monsoon Rainfall (mm/day)",
+        "impact": 1.6
+      }
+    ],
+    "top_mitigating_factors": [
+      {
+        "feature": "Vegetation Index (NDVI)",
+        "impact": -18.4
+      },
+      {
+        "feature": "Land Use / Land Cover",
+        "impact": -16.5
+      }
+    ],
+    "features_breakdown": {
+      "elevation": {
+        "display_name": "Elevation (m ASL)",
+        "measured_value": 1.0,
+        "shap_impact_pct": 15.32
+      },
+      "slope": {
+        "display_name": "Slope Gradient (\u00b0)",
+        "measured_value": 2.0960748195648193,
+        "shap_impact_pct": -0.91
+      },
+      "ndvi": {
+        "display_name": "Vegetation Index (NDVI)",
+        "measured_value": 0.8310705423355103,
+        "shap_impact_pct": -18.38
+      },
+      "lulc": {
+        "display_name": "Land Use / Land Cover",
+        "measured_value": 80.0,
+        "shap_impact_pct": -16.52
+      },
+      "rainfall": {
+        "display_name": "Monsoon Rainfall (mm/day)",
+        "measured_value": 11.346537590026855,
+        "shap_impact_pct": 1.56
+      },
+      "dist_water": {
+        "display_name": "Distance to River/Lake (m)",
+        "measured_value": 646.2197875976562,
+        "shap_impact_pct": 11.81
+      }
+    }
+  },
+  "neelamperoor": {
+    "name": "Neelamperoor",
+    "lat": 9.512,
+    "lon": 76.475,
+    "flood_risk_pct": 44.6,
+    "base_rate_pct": 87.6,
+    "plain_english_summary": "Neelamperoor is currently flagged as MODERATE RISK (44.6% flood probability). The primary hydrological drivers elevating inundation danger are Land Use / Land Cover (+14.3%) and Elevation (m ASL) (+7.9%). Risk is partially mitigated by Monsoon Rainfall (mm/day) (-74.5%).",
+    "waterfall_plot_path": "/outputs/figures/shap_waterfall_neelamperoor.png",
+    "top_aggravating_drivers": [
+      {
+        "feature": "Land Use / Land Cover",
+        "impact": 14.3
+      },
+      {
+        "feature": "Elevation (m ASL)",
+        "impact": 7.9
+      },
+      {
+        "feature": "Distance to River/Lake (m)",
+        "impact": 3.4
+      }
+    ],
+    "top_mitigating_factors": [
+      {
+        "feature": "Monsoon Rainfall (mm/day)",
+        "impact": -74.5
+      },
+      {
+        "feature": "Vegetation Index (NDVI)",
+        "impact": -54.6
+      }
+    ],
+    "features_breakdown": {
+      "elevation": {
+        "display_name": "Elevation (m ASL)",
+        "measured_value": 1.0,
+        "shap_impact_pct": 7.95
+      },
+      "slope": {
+        "display_name": "Slope Gradient (\u00b0)",
+        "measured_value": 0.9274099469184875,
+        "shap_impact_pct": -5.87
+      },
+      "ndvi": {
+        "display_name": "Vegetation Index (NDVI)",
+        "measured_value": 0.8388233780860901,
+        "shap_impact_pct": -54.56
+      },
+      "lulc": {
+        "display_name": "Land Use / Land Cover",
+        "measured_value": 40.0,
+        "shap_impact_pct": 14.31
+      },
+      "rainfall": {
+        "display_name": "Monsoon Rainfall (mm/day)",
+        "measured_value": 11.141914367675781,
+        "shap_impact_pct": -74.52
+      },
+      "dist_water": {
+        "display_name": "Distance to River/Lake (m)",
+        "measured_value": 540.0,
+        "shap_impact_pct": 3.36
+      }
+    }
+  },
+  "veliyanad": {
+    "name": "Veliyanad",
+    "lat": 9.498,
+    "lon": 76.51,
+    "flood_risk_pct": 72.8,
+    "base_rate_pct": 87.6,
+    "plain_english_summary": "Veliyanad is currently flagged as HIGH RISK (72.8% flood probability). The primary hydrological drivers elevating inundation danger are Distance to River/Lake (m) (+15.3%) and Monsoon Rainfall (mm/day) (+10.7%). Risk is partially mitigated by Slope Gradient (\u00b0) (-14.0%).",
+    "waterfall_plot_path": "/outputs/figures/shap_waterfall_veliyanad.png",
+    "top_aggravating_drivers": [
+      {
+        "feature": "Distance to River/Lake (m)",
+        "impact": 15.3
+      },
+      {
+        "feature": "Monsoon Rainfall (mm/day)",
+        "impact": 10.7
+      },
+      {
+        "feature": "Elevation (m ASL)",
+        "impact": 9.8
+      }
+    ],
+    "top_mitigating_factors": [
+      {
+        "feature": "Slope Gradient (\u00b0)",
+        "impact": -14.0
+      },
+      {
+        "feature": "Vegetation Index (NDVI)",
+        "impact": -8.8
+      }
+    ],
+    "features_breakdown": {
+      "elevation": {
+        "display_name": "Elevation (m ASL)",
+        "measured_value": 2.0,
+        "shap_impact_pct": 9.77
+      },
+      "slope": {
+        "display_name": "Slope Gradient (\u00b0)",
+        "measured_value": 2.0788180828094482,
+        "shap_impact_pct": -14.03
+      },
+      "ndvi": {
+        "display_name": "Vegetation Index (NDVI)",
+        "measured_value": 0.7347204089164734,
+        "shap_impact_pct": -8.78
+      },
+      "lulc": {
+        "display_name": "Land Use / Land Cover",
+        "measured_value": 30.0,
+        "shap_impact_pct": -2.28
+      },
+      "rainfall": {
+        "display_name": "Monsoon Rainfall (mm/day)",
+        "measured_value": 11.440896034240723,
+        "shap_impact_pct": 10.7
+      },
+      "dist_water": {
+        "display_name": "Distance to River/Lake (m)",
+        "measured_value": 702.0,
+        "shap_impact_pct": 15.31
+      }
+    }
+  }
+}

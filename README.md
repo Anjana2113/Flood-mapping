@@ -1,17 +1,30 @@
-# 🌊 Flood Susceptibility & Risk Mapping — Kuttanad, Kerala
+# 🌊 Kuttanad Spatio-Temporal Flood AI & Early Warning Platform
 
-> A GIS and Machine Learning based flood susceptibility and risk assessment system for the Kuttanad region of Kerala, India.
+> An operational, spatio-temporal flood forecasting, early warning, and explainable AI system for the Kuttanad delta region of Kerala, India.  
+> Grounded in the **March 2025 SCIE Base Paper**: *Li et al., "Flash Flood Regionalization Combining GNN and SHAP Methods", Remote Sensing (MDPI)*.
 
 ---
 
-## 📌 Project Overview
+## 📌 Phase 1 Milestones Achieved (50% Implementation)
 
-This project uses **Sentinel-1 SAR imagery**, **Google Earth Engine (GEE)**, and **Machine Learning** to:
-1. Extract historical flood inundation maps (2018, 2019, 2021 Kerala floods)
-2. Collect environmental factors (DEM, Slope, NDVI, LULC, Rainfall, Distance to Water)
-3. Train flood susceptibility models using **Random Forest** and **XGBoost**
-4. Generate a **Flood Susceptibility Map** and a **Flood Risk Map** (Hazard x Exposure)
-5. Serve an interactive web dashboard for flood exploration
+1. **Hydrological Graph Formulation $G = (V, E, X)$:** Converted physical landscape, village polders, and river canals into a topological graph with spatial adjacency matrix $A$ (*Li et al., Section 3.1*).
+2. **Deep Sequence Modeling via GRU:** Implemented a Gated Recurrent Unit (GRU) neural network modeling 5-step antecedent precipitation and hydraulic memory lag.
+3. **Formal 3-Model Benchmarking:** Evaluated Random Forest vs. XGBoost vs. Proposed GRU on a held-out test split across 6 metrics.
+4. **Explainable AI (SHAP) Engine:** Generated global beeswarm attribution and localized village-level SHAP waterfall plots with automated plain-English risk driver narratives.
+5. **Interactive Public Early Warning Dashboard:** Deployed Flask application featuring village risk lookup, real-time SHAP explanation inspector, and emergency alert broadcast simulation.
+
+---
+
+## 📊 3-Model Performance Benchmark (Held-Out Test Data)
+
+| Metric | Random Forest (Baseline) | XGBoost (Baseline) | Proposed GRU (Deep Learning) |
+|---|:---:|:---:|:---:|
+| **Accuracy** | 88.53% | 93.14% | **90.71%** |
+| **AUC-ROC** | 0.9421 | 0.9216 | **0.8995** |
+| **F1-Score** | 0.9319 | 0.9611 | **0.9465** |
+| **Precision** | 0.9733 | 0.9565 | **0.9574** |
+| **Recall** | 0.8938 | 0.9657 | **0.9358** |
+| **Cohen's Kappa** | 0.5740 | 0.6714 | **0.5962** |
 
 ---
 
@@ -20,108 +33,71 @@ This project uses **Sentinel-1 SAR imagery**, **Google Earth Engine (GEE)**, and
 ```
 final_project/
 │
-├── 01_build_dataset.py        # Extract features + build ML dataset
-├── 02_train_models.py         # Train RF & XGBoost with SMOTE balancing
-├── 03_shap_analysis.py        # SHAP feature importance analysis
-├── 04_generate_map.py         # Generate Flood Susceptibility Map
-├── 05_interactive_web_map.py  # Folium-based standalone map
-├── 06_flood_risk_map.py       # Generate Flood Risk Map (Hazard x Exposure)
+├── 01_build_dataset.py            # Extract features from GEE rasters into ML dataset
+├── 02_train_models.py             # Train baseline RF & XGBoost with SMOTE balancing
+├── 03_shap_analysis.py            # Preliminary SHAP analysis
+├── 04_generate_map.py             # Generate Flood Susceptibility Map (GeoTIFF)
+├── 05_interactive_web_map.py      # Standalone Folium map viewer
+├── 06_flood_risk_map.py           # Generate Flood Risk Map (Hazard x Exposure)
+├── 07_construct_kuttanad_graph.py # Construct Hydrological Graph G=(V,E,X) & Adjacency Matrix
+├── 08_train_gru_model.py          # Train Deep GRU Sequence Network & generate 3-model benchmark
+├── 09_shap_explainability.py      # Global SHAP beeswarm + local village waterfall explanations
 │
-├── app.py                     # Flask web app (API + dashboard server)
+├── app.py                         # Flask web application & REST API server
 │
 ├── templates/
-│   └── index.html             # Interactive Leaflet dashboard UI
+│   └── index.html                 # Leaflet GIS early warning dashboard UI
 │
-├── data/                      # (Not tracked — large GEE rasters & CSV)
-│   ├── Kuttanad_Environmental_Factors_30m.tif
-│   ├── Kuttanad_Master_Flood_Inventory_2018_2021.tif
-│   └── kuttanad_ml_dataset.csv
+├── data/
+│   ├── kuttanad_graph.json        # Graph structure: nodes, features, adjacency matrix
+│   ├── Kuttanad_Environmental_Factors_30m.tif (Git LFS / Local)
+│   ├── Kuttanad_Master_Flood_Inventory_2018_2021.tif (Git LFS / Local)
+│   └── kuttanad_ml_dataset.csv (Git LFS / Local)
 │
 └── outputs/
-    ├── maps/                  # Flood Susceptibility & Risk PNGs + TIFs
-    ├── models/                # Trained ML model PKL files (not tracked)
-    └── figures/               # SHAP plots and analysis figures
+    ├── maps/                      # Flood Susceptibility & Risk Maps (TIF / PNG)
+    ├── models/
+    │   ├── benchmark_summary.json # 3-model benchmark metrics JSON
+    │   ├── village_shap_explanations.json # Village-level natural-language SHAP drivers
+    │   ├── gru_model.h5           # Trained Deep GRU model weights
+    │   ├── feature_scaler.pkl     # Standard scaler for input features
+    │   ├── xgboost_model.pkl      # Trained XGBoost model
+    │   └── random_forest_model.pkl # Trained Random Forest model (local)
+    └── figures/
+        ├── kuttanad_graph_topology.png       # Graph topology visualization
+        ├── 3_model_roc_comparison.png        # Comparative ROC curves
+        ├── 3_model_metrics_comparison.png    # Multi-metric comparison bar chart
+        ├── shap_summary_beeswarm.png         # Global SHAP beeswarm plot
+        ├── shap_global_bar.png               # Global feature ranking bar chart
+        └── shap_waterfall_*.png              # Village-level local waterfall plots
 ```
 
 ---
 
-## 🛰️ Data & Factor Collection (Google Earth Engine)
+## 🌐 Running the Platform Locally
 
-All spatial data was extracted via **Google Earth Engine (GEE)** at **30m resolution** to ensure spatial consistency:
+1. Install dependencies:
+   ```bash
+   pip install flask rasterio numpy pandas scikit-learn xgboost shap imbalanced-learn matplotlib networkx tensorflow
+   ```
 
-| Factor | Source | Why GEE? |
-|---|---|---|
-| Flood Inventory | Sentinel-1 SAR (2018, 2019, 2021) | Multi-event SAR processing via GEE |
-| DEM (Elevation) | SRTM 30m | Clipped to exact study boundary |
-| Slope | Derived from SRTM | Computed on-the-fly in GEE |
-| NDVI | Sentinel-2 (pre-flood) | Cloud-masked composites |
-| LULC | ESA WorldCover 2020 | Resampled to match grid |
-| Rainfall | CHIRPS | Seasonal accumulation |
-| Distance to Water | JRC Surface Water | Euclidean distance raster |
+2. Run the Flask application:
+   ```bash
+   python app.py
+   ```
 
----
-
-## 🤖 Machine Learning Pipeline
-
-```
-Raw Rasters → Feature Stack → ML Dataset → SMOTE Balancing
-                                                ↓
-                              Random Forest + XGBoost Training
-                                                ↓
-                         SHAP Analysis → Feature Importance
-                                                ↓
-                    Flood Susceptibility Map (pixel-wise prediction)
-                                                ↓
-                    Flood Risk Map = Susceptibility x Exposure (LULC)
-```
+3. Open in your browser:  
+   👉 **http://127.0.0.1:5000**
 
 ---
 
-## 🌐 Interactive Web Dashboard
+## 📍 Study Basin
 
-Run the Flask app locally:
-
-```bash
-pip install flask rasterio numpy scikit-learn xgboost shap
-python app.py
-```
-
-Then open: **http://127.0.0.1:5000**
-
-### Features:
-- Interactive Leaflet map with satellite base layers (Google, Esri)
-- Village-level flood susceptibility & risk lookup
-- Live SHAP explanation chart per location
-- Flood Risk overlay showing endangered human settlements
-- Toggle between Flood Susceptibility and Risk layers
+**Kuttanad, Alappuzha District, Kerala, India** — Lying 0.6–2.2m below sea level, it is South Asia's lowest-lying agrarian delta experiencing chronic monsoon flooding and backwater ingress.
 
 ---
 
-## 📦 Requirements
+## 👥 Authors & Academic Context
 
-```bash
-pip install flask rasterio numpy pandas scikit-learn xgboost shap imbalanced-learn matplotlib
-```
-
----
-
-## 📁 Note on Large Files
-
-The following files are **not tracked** in this repository due to size constraints:
-- `data/*.tif` — GEE rasters (30-300 MB)
-- `data/*.csv` — ML dataset (~37 MB)
-- `outputs/models/*.pkl` — Trained model files (~175 MB)
-
-To reproduce: run scripts `01_build_dataset.py` → `02_train_models.py` → `04_generate_map.py` → `06_flood_risk_map.py` → `app.py`
-
----
-
-## 📍 Study Area
-
-**Kuttanad, Alappuzha District, Kerala, India** — Known as the "Rice Bowl of Kerala," it is one of the most flood-prone regions in South Asia, lying 0.6–2.2m below sea level.
-
----
-
-## Author
-
-Anjana | Final Year Project | 2025-2026
+* **Project:** Final Year B.Tech Data Science / Computer Science Project (Phase 1)
+* **Base Paper Reference:** Li, Y., Zhang, C., Cui, P., et al. (2025). *Flash Flood Regionalization for the Hengduan Mountains Region, China, Combining GNN and SHAP Methods*. **Remote Sensing**, 17(6), 946. [DOI: 10.3390/rs17060946](https://doi.org/10.3390/rs17060946)

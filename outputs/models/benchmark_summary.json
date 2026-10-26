@@ -1,0 +1,26 @@
+{
+  "Random Forest": {
+    "Accuracy": 88.53,
+    "AUC_ROC": 0.9421,
+    "F1_Score": 0.9319,
+    "Precision": 0.9733,
+    "Recall": 0.8938,
+    "Cohen_Kappa": 0.574
+  },
+  "XGBoost": {
+    "Accuracy": 93.14,
+    "AUC_ROC": 0.9216,
+    "F1_Score": 0.9611,
+    "Precision": 0.9565,
+    "Recall": 0.9657,
+    "Cohen_Kappa": 0.6714
+  },
+  "Proposed GRU (Deep Learning)": {
+    "Accuracy": 90.71,
+    "AUC_ROC": 0.8995,
+    "F1_Score": 0.9465,
+    "Precision": 0.9574,
+    "Recall": 0.9358,
+    "Cohen_Kappa": 0.5962
+  }
+}

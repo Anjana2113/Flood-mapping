@@ -1,0 +1,422 @@
+{
+  "metadata": {
+    "title": "Kuttanad Hydrological Graph",
+    "reference": "Li et al., Remote Sensing 2025, Sec 3.1",
+    "num_nodes": 10,
+    "num_edges": 18,
+    "feature_names": [
+      "elevation",
+      "slope",
+      "ndvi",
+      "lulc",
+      "rainfall",
+      "dist_water"
+    ]
+  },
+  "nodes": [
+    {
+      "index": 0,
+      "id": "kainakary",
+      "name": "Kainakary",
+      "lat": 9.492,
+      "lon": 76.368,
+      "desc": "Polder core surrounded by Vembanad Lake",
+      "features": {
+        "elevation": -2.0,
+        "slope": 0.0,
+        "ndvi": -0.25597748160362244,
+        "lulc": 80.0,
+        "rainfall": 11.308283805847168,
+        "dist_water": 284.60498046875
+      }
+    },
+    {
+      "index": 1,
+      "id": "pulinkunnoo",
+      "name": "Pulinkunnoo",
+      "lat": 9.455,
+      "lon": 76.452,
+      "desc": "Central Kuttanad lowlands along Pamba river",
+      "features": {
+        "elevation": 6.0,
+        "slope": 1.8798571825027466,
+        "ndvi": 0.7334855794906616,
+        "lulc": 10.0,
+        "rainfall": 11.221938133239746,
+        "dist_water": 702.0
+      }
+    },
+    {
+      "index": 2,
+      "id": "champakulam",
+      "name": "Champakulam",
+      "lat": 9.412,
+      "lon": 76.425,
+      "desc": "Low-lying agricultural polder zone",
+      "features": {
+        "elevation": 0.0,
+        "slope": 0.9400634765625,
+        "ndvi": 0.6185263395309448,
+        "lulc": 40.0,
+        "rainfall": 11.203432083129883,
+        "dist_water": 1214.9073486328125
+      }
+    },
+    {
+      "index": 3,
+      "id": "edathua",
+      "name": "Edathua",
+      "lat": 9.364,
+      "lon": 76.467,
+      "desc": "Southern Kuttanad delta region",
+      "features": {
+        "elevation": 0.0,
+        "slope": 4.9913859367370605,
+        "ndvi": 0.7707383036613464,
+        "lulc": 40.0,
+        "rainfall": 10.884710311889648,
+        "dist_water": 1080.0
+      }
+    },
+    {
+      "index": 4,
+      "id": "ramankary",
+      "name": "Ramankary",
+      "lat": 9.428,
+      "lon": 76.48,
+      "desc": "Manimala-Pamba river intersection plain",
+      "features": {
+        "elevation": 1.0,
+        "slope": 1.3204482793807983,
+        "ndvi": 0.8163719773292542,
+        "lulc": 40.0,
+        "rainfall": 11.049328804016113,
+        "dist_water": 210.0
+      }
+    },
+    {
+      "index": 5,
+      "id": "nedumudi",
+      "name": "Nedumudi",
+      "lat": 9.435,
+      "lon": 76.402,
+      "desc": "Backwater channel and river mouth zone",
+      "features": {
+        "elevation": 5.0,
+        "slope": 2.966557741165161,
+        "ndvi": 0.6238349676132202,
+        "lulc": 10.0,
+        "rainfall": 11.203432083129883,
+        "dist_water": 702.0
+      }
+    },
+    {
+      "index": 6,
+      "id": "thalavady",
+      "name": "Thalavady",
+      "lat": 9.351,
+      "lon": 76.442,
+      "desc": "Agricultural interior floodplain",
+      "features": {
+        "elevation": 0.0,
+        "slope": 0.9398971199989319,
+        "ndvi": 0.6913855671882629,
+        "lulc": 90.0,
+        "rainfall": 10.882177352905273,
+        "dist_water": 150.0
+      }
+    },
+    {
+      "index": 7,
+      "id": "kavalam",
+      "name": "Kavalam",
+      "lat": 9.495,
+      "lon": 76.448,
+      "desc": "Northern Vembanad backwater village",
+      "features": {
+        "elevation": 1.0,
+        "slope": 2.0960748195648193,
+        "ndvi": 0.8310705423355103,
+        "lulc": 80.0,
+        "rainfall": 11.346537590026855,
+        "dist_water": 646.2197875976562
+      }
+    },
+    {
+      "index": 8,
+      "id": "neelamperoor",
+      "name": "Neelamperoor",
+      "lat": 9.512,
+      "lon": 76.475,
+      "desc": "Low elevation wetland agricultural boundary",
+      "features": {
+        "elevation": 1.0,
+        "slope": 0.9274099469184875,
+        "ndvi": 0.8388233780860901,
+        "lulc": 40.0,
+        "rainfall": 11.141914367675781,
+        "dist_water": 540.0
+      }
+    },
+    {
+      "index": 9,
+      "id": "veliyanad",
+      "name": "Veliyanad",
+      "lat": 9.498,
+      "lon": 76.51,
+      "desc": "North-eastern river corridor zone",
+      "features": {
+        "elevation": 2.0,
+        "slope": 2.0788180828094482,
+        "ndvi": 0.7347204089164734,
+        "lulc": 30.0,
+        "rainfall": 11.440896034240723,
+        "dist_water": 702.0
+      }
+    }
+  ],
+  "adjacency_matrix": [
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      1.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      1.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      1.0,
+      0.0
+    ]
+  ],
+  "distance_matrix_km": [
+    [
+      0.0,
+      10.09,
+      10.87,
+      17.9,
+      14.2,
+      7.35,
+      17.66,
+      8.78,
+      11.94,
+      15.59
+    ],
+    [
+      10.09,
+      0.0,
+      5.62,
+      10.25,
+      4.29,
+      5.92,
+      11.62,
+      4.47,
+      6.82,
+      7.96
+    ],
+    [
+      10.87,
+      5.62,
+      0.0,
+      7.05,
+      6.29,
+      3.59,
+      7.03,
+      9.57,
+      12.4,
+      13.36
+    ],
+    [
+      17.9,
+      10.25,
+      7.05,
+      0.0,
+      7.26,
+      10.64,
+      3.1,
+      14.71,
+      16.48,
+      15.63
+    ],
+    [
+      14.2,
+      4.29,
+      6.29,
+      7.26,
+      0.0,
+      8.59,
+      9.52,
+      8.24,
+      9.36,
+      8.45
+    ],
+    [
+      7.35,
+      5.92,
+      3.59,
+      10.64,
+      8.59,
+      0.0,
+      10.32,
+      8.36,
+      11.72,
+      13.76
+    ],
+    [
+      17.66,
+      11.62,
+      7.03,
+      3.1,
+      9.52,
+      10.32,
+      0.0,
+      16.03,
+      18.26,
+      17.97
+    ],
+    [
+      8.78,
+      4.47,
+      9.57,
+      14.71,
+      8.24,
+      8.36,
+      16.03,
+      0.0,
+      3.51,
+      6.81
+    ],
+    [
+      11.94,
+      6.82,
+      12.4,
+      16.48,
+      9.36,
+      11.72,
+      18.26,
+      3.51,
+      0.0,
+      4.14
+    ],
+    [
+      15.59,
+      7.96,
+      13.36,
+      15.63,
+      8.45,
+      13.76,
+      17.97,
+      6.81,
+      4.14,
+      0.0
+    ]
+  ]
+}
