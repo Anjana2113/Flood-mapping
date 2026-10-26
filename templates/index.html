@@ -401,6 +401,17 @@
                 </div>
             </div>
 
+            <!-- 7-DAY LIVE INUNDATION FORECAST -->
+            <div class="panel-box">
+                <div class="box-title">🌤️ 7-Day Inundation Forecast (Open-Meteo & GRU)</div>
+                <div id="forecastSummary" style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.4;">
+                    Sequential meteorological rainfall & GRU model trajectory
+                </div>
+                <div id="forecastDaysContainer" style="display: flex; flex-direction: column; gap: 7px;">
+                    <div style="font-size: 12px; color: var(--text-muted); text-align: center; padding: 8px;">Select a village to load trajectory</div>
+                </div>
+            </div>
+
             <!-- Measured Environmental Factors -->
             <div class="panel-box">
                 <div class="box-title">🔬 Measured Field Conditioning Factors</div>
@@ -433,6 +444,7 @@
         let markers = {};
         let villagesData = [];
         let villageExplanations = {};
+        let forecastData = null;
 
         function openModal(src) {
             document.getElementById('modalImg').src = src;
@@ -467,7 +479,13 @@
                     villageExplanations = await explRes.json();
                 }
 
-                // 2. Load villages
+                // 2. Load live 7-day forecast
+                const fRes = await fetch('/api/forecast');
+                if (fRes.ok) {
+                    forecastData = await fRes.json();
+                }
+
+                // 3. Load villages
                 const res = await fetch('/api/villages');
                 villagesData = await res.json();
 
@@ -584,6 +602,51 @@
                     tbody.appendChild(tr);
                 }
             }
+
+            // Render live 7-day forecast trajectory
+            renderVillageForecast(vId);
+        }
+
+        function renderVillageForecast(vId) {
+            const container = document.getElementById('forecastDaysContainer');
+            const summaryEl = document.getElementById('forecastSummary');
+            if (!forecastData || !forecastData.village_inundation_forecasts) {
+                summaryEl.innerText = "Live meteorological forecast currently offline.";
+                return;
+            }
+
+            const vForecast = forecastData.village_inundation_forecasts[vId];
+            const weather = forecastData.meteorological_forecast;
+            if (!vForecast) return;
+
+            const peakColor = vForecast.peak_risk_percent >= 75 ? '#f87171' : (vForecast.peak_risk_percent >= 50 ? '#fb923c' : '#4ade80');
+            summaryEl.innerHTML = `<span style="font-weight:700; color:${peakColor};">Peak Inundation Danger: ${vForecast.peak_risk_percent}% on ${vForecast.peak_risk_date}</span><br><span style="color: #cbd5e1;">${vForecast.recommended_action}</span>`;
+
+            container.innerHTML = '';
+            weather.dates.forEach((date, i) => {
+                const rain = weather.rain_mm[i];
+                const risk = vForecast.daily_risk_percentages[i];
+                
+                let barColor = '#4ade80';
+                if (risk >= 75) barColor = '#f87171';
+                else if (risk >= 50) barColor = '#fb923c';
+                else if (risk < 25) barColor = '#38bdf8';
+
+                const dayRow = document.createElement('div');
+                dayRow.style.cssText = 'background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 6px 10px; display: flex; align-items: center; justify-content: space-between; font-size: 11.5px;';
+                
+                dayRow.innerHTML = `
+                    <div style="width: 78px; font-weight: 600; color: #f8fafc; font-family: 'JetBrains Mono', monospace;">${date.slice(5)}</div>
+                    <div style="width: 72px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; font-size: 11px;">
+                        <span>🌧️</span> <span>${rain.toFixed(1)}mm</span>
+                    </div>
+                    <div style="flex: 1; margin: 0 10px; background: rgba(255,255,255,0.1); height: 6px; border-radius: 3px; overflow: hidden;">
+                        <div style="width: ${Math.min(100, risk)}%; background: ${barColor}; height: 100%;"></div>
+                    </div>
+                    <div style="width: 44px; text-align: right; font-weight: 700; color: ${barColor}; font-family: 'JetBrains Mono', monospace;">${risk.toFixed(1)}%</div>
+                `;
+                container.appendChild(dayRow);
+            });
         }
 
         function filterVillagesByRisk(filter) {

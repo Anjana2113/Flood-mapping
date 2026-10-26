@@ -36,6 +36,7 @@ RF_PATH = os.path.join("outputs", "models", "random_forest_model.pkl")
 BENCHMARK_PATH = os.path.join("outputs", "models", "benchmark_summary.json")
 VILLAGE_EXPLAIN_PATH = os.path.join("outputs", "models", "village_shap_explanations.json")
 GRAPH_PATH = os.path.join("data", "kuttanad_graph.json")
+FORECAST_PATH = os.path.join("data", "live_weather_forecast.json")
 
 # Global Variables
 model = None
@@ -120,6 +121,14 @@ def get_village_explanations():
             data = json.load(f)
         return jsonify(data)
     return jsonify({"error": "Village explanations not found"})
+
+@app.route('/api/forecast')
+def get_forecast():
+    if os.path.exists(FORECAST_PATH):
+        with open(FORECAST_PATH, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return jsonify(data)
+    return jsonify({"error": "Live weather forecast data not found"})
 
 def extract_valid_pixel_features(src, lon, lat):
     row, col = src.index(lon, lat)

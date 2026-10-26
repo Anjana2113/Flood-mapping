@@ -1,0 +1,261 @@
+{
+  "metadata": {
+    "source": "Open-Meteo Global Numerical Weather API (ECMWF/GFS Ensemble)",
+    "study_basin": "Kuttanad Delta, Alappuzha, Kerala",
+    "coordinates": {
+      "lat": 9.45,
+      "lon": 76.43
+    },
+    "last_updated": "2026-10-27 01:07:20 IST",
+    "forecast_horizon_days": 7
+  },
+  "meteorological_forecast": {
+    "dates": [
+      "2026-10-27",
+      "2026-10-28",
+      "2026-10-29",
+      "2026-10-30",
+      "2026-10-31",
+      "2026-11-01",
+      "2026-11-02"
+    ],
+    "rain_mm": [
+      2.3,
+      0.5,
+      0.1,
+      0.7,
+      0.0,
+      6.0,
+      3.0
+    ],
+    "rain_hours": [
+      9.0,
+      3.0,
+      1.0,
+      6.0,
+      0.0,
+      15.0,
+      12.0
+    ],
+    "max_temps": [
+      32.0,
+      31.8,
+      32.1,
+      31.8,
+      32.9,
+      32.4,
+      30.6
+    ],
+    "min_temps": [
+      23.3,
+      23.2,
+      22.8,
+      23.4,
+      23.5,
+      23.4,
+      23.4
+    ]
+  },
+  "village_inundation_forecasts": {
+    "kainakary": {
+      "name": "Kainakary",
+      "lat": 9.492,
+      "lon": 76.368,
+      "elevation_m": -2.0,
+      "distance_to_water_m": 284.60498046875,
+      "daily_risk_percentages": [
+        45.2,
+        45.0,
+        44.3,
+        44.6,
+        43.8,
+        51.3,
+        52.6
+      ],
+      "peak_risk_percent": 52.6,
+      "peak_risk_date": "2026-11-02",
+      "alert_status": "ORANGE ALERT (HIGH)",
+      "recommended_action": "Polder bund monitoring and crop sluice closure advised."
+    },
+    "pulinkunnoo": {
+      "name": "Pulinkunnoo",
+      "lat": 9.455,
+      "lon": 76.452,
+      "elevation_m": 6.0,
+      "distance_to_water_m": 702.0,
+      "daily_risk_percentages": [
+        17.3,
+        17.1,
+        16.7,
+        16.9,
+        16.5,
+        21.1,
+        21.9
+      ],
+      "peak_risk_percent": 21.9,
+      "peak_risk_date": "2026-11-02",
+      "alert_status": "GREEN (LOW HAZARD)",
+      "recommended_action": "No immediate flood danger predicted."
+    },
+    "champakulam": {
+      "name": "Champakulam",
+      "lat": 9.412,
+      "lon": 76.425,
+      "elevation_m": 0.0,
+      "distance_to_water_m": 1214.9073486328125,
+      "daily_risk_percentages": [
+        24.5,
+        24.3,
+        23.8,
+        24.0,
+        23.5,
+        29.3,
+        30.3
+      ],
+      "peak_risk_percent": 30.3,
+      "peak_risk_date": "2026-11-02",
+      "alert_status": "YELLOW WATCH (MODERATE)",
+      "recommended_action": "Normal monsoon vigilance; maintain drainage channels."
+    },
+    "edathua": {
+      "name": "Edathua",
+      "lat": 9.364,
+      "lon": 76.467,
+      "elevation_m": 0.0,
+      "distance_to_water_m": 1080.0,
+      "daily_risk_percentages": [
+        23.8,
+        23.6,
+        23.1,
+        23.4,
+        22.8,
+        28.6,
+        29.6
+      ],
+      "peak_risk_percent": 29.6,
+      "peak_risk_date": "2026-11-02",
+      "alert_status": "GREEN (LOW HAZARD)",
+      "recommended_action": "No immediate flood danger predicted."
+    },
+    "ramankary": {
+      "name": "Ramankary",
+      "lat": 9.428,
+      "lon": 76.48,
+      "elevation_m": 1.0,
+      "distance_to_water_m": 210.0,
+      "daily_risk_percentages": [
+        28.6,
+        28.4,
+        27.8,
+        28.1,
+        27.5,
+        33.9,
+        35.0
+      ],
+      "peak_risk_percent": 35.0,
+      "peak_risk_date": "2026-11-02",
+      "alert_status": "YELLOW WATCH (MODERATE)",
+      "recommended_action": "Normal monsoon vigilance; maintain drainage channels."
+    },
+    "nedumudi": {
+      "name": "Nedumudi",
+      "lat": 9.435,
+      "lon": 76.402,
+      "elevation_m": 5.0,
+      "distance_to_water_m": 702.0,
+      "daily_risk_percentages": [
+        19.8,
+        19.6,
+        19.2,
+        19.4,
+        18.9,
+        24.0,
+        24.9
+      ],
+      "peak_risk_percent": 24.9,
+      "peak_risk_date": "2026-11-02",
+      "alert_status": "GREEN (LOW HAZARD)",
+      "recommended_action": "No immediate flood danger predicted."
+    },
+    "thalavady": {
+      "name": "Thalavady",
+      "lat": 9.351,
+      "lon": 76.442,
+      "elevation_m": 0.0,
+      "distance_to_water_m": 150.0,
+      "daily_risk_percentages": [
+        32.9,
+        32.6,
+        32.0,
+        32.3,
+        31.6,
+        38.5,
+        39.7
+      ],
+      "peak_risk_percent": 39.7,
+      "peak_risk_date": "2026-11-02",
+      "alert_status": "YELLOW WATCH (MODERATE)",
+      "recommended_action": "Normal monsoon vigilance; maintain drainage channels."
+    },
+    "kavalam": {
+      "name": "Kavalam",
+      "lat": 9.495,
+      "lon": 76.448,
+      "elevation_m": 1.0,
+      "distance_to_water_m": 646.2197875976562,
+      "daily_risk_percentages": [
+        24.8,
+        24.6,
+        24.1,
+        24.3,
+        23.7,
+        29.6,
+        30.7
+      ],
+      "peak_risk_percent": 30.7,
+      "peak_risk_date": "2026-11-02",
+      "alert_status": "YELLOW WATCH (MODERATE)",
+      "recommended_action": "Normal monsoon vigilance; maintain drainage channels."
+    },
+    "neelamperoor": {
+      "name": "Neelamperoor",
+      "lat": 9.512,
+      "lon": 76.475,
+      "elevation_m": 1.0,
+      "distance_to_water_m": 540.0,
+      "daily_risk_percentages": [
+        25.5,
+        25.3,
+        24.8,
+        25.0,
+        24.5,
+        30.5,
+        31.5
+      ],
+      "peak_risk_percent": 31.5,
+      "peak_risk_date": "2026-11-02",
+      "alert_status": "YELLOW WATCH (MODERATE)",
+      "recommended_action": "Normal monsoon vigilance; maintain drainage channels."
+    },
+    "veliyanad": {
+      "name": "Veliyanad",
+      "lat": 9.498,
+      "lon": 76.51,
+      "elevation_m": 2.0,
+      "distance_to_water_m": 702.0,
+      "daily_risk_percentages": [
+        23.6,
+        23.4,
+        22.9,
+        23.1,
+        22.6,
+        28.3,
+        29.3
+      ],
+      "peak_risk_percent": 29.3,
+      "peak_risk_date": "2026-11-02",
+      "alert_status": "GREEN (LOW HAZARD)",
+      "recommended_action": "No immediate flood danger predicted."
+    }
+  }
+}
